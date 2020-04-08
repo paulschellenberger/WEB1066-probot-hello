@@ -6,6 +6,7 @@ env:
 - NPM_TARGET=test
 - NPM_TARGET=lin
 - NPM_TARGET=coverage
+
 before_install:
 - docker pull node:8-onbuild
 
@@ -17,11 +18,11 @@ script:
 
 after_success:
 - set -x -v;
-  set -e;
-  if [ "${NPM_TARGET}" = "test"]; then
-	docker tag probot-hello probot-hello:$(git rev-parse HEAD);
-  else
-    echo "skipping docker tag";
-  fi;
-  docker images;
-  set +x +v;
+set -e;
+if [ "${NPM_TARGET}" = "test"]; then
+docker tag probot-hello probot-hello:$(git rev-parse HEAD);
+else
+echo "skipping docker tag";
+fi;
+docker images;
+set +x +v;
